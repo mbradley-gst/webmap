@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>FSapps2</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="data/Applicationsbylocalauthority_1.js"></script>
+        <script src="data/Placeneed202526_2.js"></script>
+        <script src="data/Placeneed202425_3.js"></script>
+        <script src="data/Placeneed202324_4.js"></script>
+        <script src="data/Placeneed202223_5.js"></script>
+        <script src="data/Placeneed202122_6.js"></script>
+        <script src="data/Provisionallyapprovedsecondaryfreeschools_7.js"></script>
+        <script src="data/Existingsecondaryschools_8.js"></script>
+        <script src="data/Approvedsecondaryfreeschools_9.js"></script>
+        <script src="data/KLAwarrington_10.js"></script>
+        <script src="data/40mileradiusofKLAWarrington_11.js"></script>
+        <script>
+        var crs = new L.Proj.CRS('EPSG:3857', '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:8, minZoom:3
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+            map.setMaxBounds(map.getBounds());
+        }
+        map.createPane('pane_clippedmap11_0');
+        map.getPane('pane_clippedmap11_0').style.zIndex = 400;
+        var img_clippedmap11_0 = 'data/clippedmap11_0.png';
+        var img_bounds_clippedmap11_0 = [[52.71289987558586,-3.218436161959596],[54.023565221502125,-1.3367138300725279]];
+        var layer_clippedmap11_0 = new L.imageOverlay(img_clippedmap11_0,
+                                              img_bounds_clippedmap11_0,
+                                              {pane: 'pane_clippedmap11_0'});
+        bounds_group.addLayer(layer_clippedmap11_0);
+        map.addLayer(layer_clippedmap11_0);
+        function pop_Applicationsbylocalauthority_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lad20nm'] !== null ? autolinker.link(feature.properties['lad20nm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['appsec_count'] !== null ? autolinker.link(feature.properties['appsec_count'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['appsec_Approved'] !== null ? autolinker.link(feature.properties['appsec_Approved'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Applicationsbylocalauthority_1_0(feature) {
+            if (feature.properties['appsec_count'] >= 1.000000 && feature.properties['appsec_count'] <= 1.000000 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,128,128,0.2)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['appsec_count'] >= 1.000000 && feature.properties['appsec_count'] <= 1.763723 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(118,118,118,0.2980392156862745)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['appsec_count'] >= 1.763723 && feature.properties['appsec_count'] <= 2.379475 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(108,108,108,0.4)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['appsec_count'] >= 2.379475 && feature.properties['appsec_count'] <= 3.420048 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,97,97,0.5019607843137255)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['appsec_count'] >= 3.420048 && feature.properties['appsec_count'] <= 4.322196 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,87,87,0.6039215686274509)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['appsec_count'] >= 4.322196 && feature.properties['appsec_count'] <= 5.000000 ) {
+                return {
+                pane: 'pane_Applicationsbylocalauthority_1',
+                opacity: 1,
+                color: 'rgba(128,128,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(77,77,77,0.7019607843137254)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Applicationsbylocalauthority_1');
+        map.getPane('pane_Applicationsbylocalauthority_1').style.zIndex = 401;
+        map.getPane('pane_Applicationsbylocalauthority_1').style['mix-blend-mode'] = 'normal';
+        var layer_Applicationsbylocalauthority_1 = new L.geoJson(json_Applicationsbylocalauthority_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Applicationsbylocalauthority_1',
+            layerName: 'layer_Applicationsbylocalauthority_1',
+            pane: 'pane_Applicationsbylocalauthority_1',
+            onEachFeature: pop_Applicationsbylocalauthority_1,
+            style: style_Applicationsbylocalauthority_1_0,
+        });
+        bounds_group.addLayer(layer_Applicationsbylocalauthority_1);
+        map.addLayer(layer_Applicationsbylocalauthority_1);
+        function pop_Placeneed202526_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Planning area code</strong><br />' + (feature.properties['Secondary'] !== null ? autolinker.link(feature.properties['Secondary'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Place need</strong><br />' + (feature.properties['need2526_Estimated_number_of_places _needed'] !== null ? autolinker.link(feature.properties['need2526_Estimated_number_of_places _needed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Placeneed202526_2_0(feature) {
+            if (feature.properties['need2526_Estimated_number_of_places _needed'] >= -2671.671080 && feature.properties['need2526_Estimated_number_of_places _needed'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Placeneed202526_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2526_Estimated_number_of_places _needed'] >= 0.000000 && feature.properties['need2526_Estimated_number_of_places _needed'] <= 253.333333 ) {
+                return {
+                pane: 'pane_Placeneed202526_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,203,237,0.12549019607843137)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2526_Estimated_number_of_places _needed'] >= 253.333333 && feature.properties['need2526_Estimated_number_of_places _needed'] <= 432.727273 ) {
+                return {
+                pane: 'pane_Placeneed202526_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,150,218,0.25098039215686274)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2526_Estimated_number_of_places _needed'] >= 432.727273 && feature.properties['need2526_Estimated_number_of_places _needed'] <= 524.848485 ) {
+                return {
+                pane: 'pane_Placeneed202526_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,97,200,0.3764705882352941)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2526_Estimated_number_of_places _needed'] >= 524.848485 && feature.properties['need2526_Estimated_number_of_places _needed'] <= 722.885108 ) {
+                return {
+                pane: 'pane_Placeneed202526_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,45,181,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Placeneed202526_2');
+        map.getPane('pane_Placeneed202526_2').style.zIndex = 402;
+        map.getPane('pane_Placeneed202526_2').style['mix-blend-mode'] = 'normal';
+        var layer_Placeneed202526_2 = new L.geoJson(json_Placeneed202526_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Placeneed202526_2',
+            layerName: 'layer_Placeneed202526_2',
+            pane: 'pane_Placeneed202526_2',
+            onEachFeature: pop_Placeneed202526_2,
+            style: style_Placeneed202526_2_0,
+        });
+        bounds_group.addLayer(layer_Placeneed202526_2);
+        map.addLayer(layer_Placeneed202526_2);
+        function pop_Placeneed202425_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Planning area code</strong><br />' + (feature.properties['Secondary'] !== null ? autolinker.link(feature.properties['Secondary'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Place need</th>\
+                        <td>' + (feature.properties['need2425_Estimated_number_of_places _needed'] !== null ? autolinker.link(feature.properties['need2425_Estimated_number_of_places _needed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Placeneed202425_3_0(feature) {
+            if (feature.properties['need2425_Estimated_number_of_places _needed'] >= -2638.670000 && feature.properties['need2425_Estimated_number_of_places _needed'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Placeneed202425_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2425_Estimated_number_of_places _needed'] >= 0.000000 && feature.properties['need2425_Estimated_number_of_places _needed'] <= 170.909091 ) {
+                return {
+                pane: 'pane_Placeneed202425_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,203,237,0.12549019607843137)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2425_Estimated_number_of_places _needed'] >= 170.909091 && feature.properties['need2425_Estimated_number_of_places _needed'] <= 311.515152 ) {
+                return {
+                pane: 'pane_Placeneed202425_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,150,218,0.25098039215686274)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2425_Estimated_number_of_places _needed'] >= 311.515152 && feature.properties['need2425_Estimated_number_of_places _needed'] <= 520.000000 ) {
+                return {
+                pane: 'pane_Placeneed202425_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,97,200,0.3764705882352941)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2425_Estimated_number_of_places _needed'] >= 520.000000 && feature.properties['need2425_Estimated_number_of_places _needed'] <= 763.885108 ) {
+                return {
+                pane: 'pane_Placeneed202425_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,45,181,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Placeneed202425_3');
+        map.getPane('pane_Placeneed202425_3').style.zIndex = 403;
+        map.getPane('pane_Placeneed202425_3').style['mix-blend-mode'] = 'normal';
+        var layer_Placeneed202425_3 = new L.geoJson(json_Placeneed202425_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Placeneed202425_3',
+            layerName: 'layer_Placeneed202425_3',
+            pane: 'pane_Placeneed202425_3',
+            onEachFeature: pop_Placeneed202425_3,
+            style: style_Placeneed202425_3_0,
+        });
+        bounds_group.addLayer(layer_Placeneed202425_3);
+        map.addLayer(layer_Placeneed202425_3);
+        function pop_Placeneed202324_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Planning area code</strong><br />' + (feature.properties['Secondary'] !== null ? autolinker.link(feature.properties['Secondary'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Place need</th>\
+                        <td>' + (feature.properties['need2324_Estimated_number_of_places _needed'] !== null ? autolinker.link(feature.properties['need2324_Estimated_number_of_places _needed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Placeneed202324_4_0(feature) {
+            if (feature.properties['need2324_Estimated_number_of_places _needed'] >= -2532.670000 && feature.properties['need2324_Estimated_number_of_places _needed'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Placeneed202324_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2324_Estimated_number_of_places _needed'] >= 0.000000 && feature.properties['need2324_Estimated_number_of_places _needed'] <= 219.393939 ) {
+                return {
+                pane: 'pane_Placeneed202324_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,203,237,0.12549019607843137)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2324_Estimated_number_of_places _needed'] >= 219.393939 && feature.properties['need2324_Estimated_number_of_places _needed'] <= 384.242424 ) {
+                return {
+                pane: 'pane_Placeneed202324_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,150,218,0.25098039215686274)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2324_Estimated_number_of_places _needed'] >= 384.242424 && feature.properties['need2324_Estimated_number_of_places _needed'] <= 597.575758 ) {
+                return {
+                pane: 'pane_Placeneed202324_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,97,200,0.3764705882352941)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2324_Estimated_number_of_places _needed'] >= 597.575758 && feature.properties['need2324_Estimated_number_of_places _needed'] <= 741.885108 ) {
+                return {
+                pane: 'pane_Placeneed202324_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,45,181,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Placeneed202324_4');
+        map.getPane('pane_Placeneed202324_4').style.zIndex = 404;
+        map.getPane('pane_Placeneed202324_4').style['mix-blend-mode'] = 'normal';
+        var layer_Placeneed202324_4 = new L.geoJson(json_Placeneed202324_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Placeneed202324_4',
+            layerName: 'layer_Placeneed202324_4',
+            pane: 'pane_Placeneed202324_4',
+            onEachFeature: pop_Placeneed202324_4,
+            style: style_Placeneed202324_4_0,
+        });
+        bounds_group.addLayer(layer_Placeneed202324_4);
+        map.addLayer(layer_Placeneed202324_4);
+        function pop_Placeneed202223_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Planning area code</strong><br />' + (feature.properties['Secondary'] !== null ? autolinker.link(feature.properties['Secondary'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Place need</th>\
+                        <td>' + (feature.properties['need2223_Estimated_number_of_places _needed'] !== null ? autolinker.link(feature.properties['need2223_Estimated_number_of_places _needed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Placeneed202223_5_0(feature) {
+            if (feature.properties['need2223_Estimated_number_of_places _needed'] >= -2703.670000 && feature.properties['need2223_Estimated_number_of_places _needed'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Placeneed202223_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2223_Estimated_number_of_places _needed'] >= 0.000000 && feature.properties['need2223_Estimated_number_of_places _needed'] <= 170.909091 ) {
+                return {
+                pane: 'pane_Placeneed202223_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,203,237,0.07450980392156863)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2223_Estimated_number_of_places _needed'] >= 170.909091 && feature.properties['need2223_Estimated_number_of_places _needed'] <= 258.181818 ) {
+                return {
+                pane: 'pane_Placeneed202223_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,150,218,0.14901960784313725)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2223_Estimated_number_of_places _needed'] >= 258.181818 && feature.properties['need2223_Estimated_number_of_places _needed'] <= 452.121212 ) {
+                return {
+                pane: 'pane_Placeneed202223_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,97,200,0.2235294117647059)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2223_Estimated_number_of_places _needed'] >= 452.121212 && feature.properties['need2223_Estimated_number_of_places _needed'] <= 606.885108 ) {
+                return {
+                pane: 'pane_Placeneed202223_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.5019607843137255)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,45,181,0.30196078431372547)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Placeneed202223_5');
+        map.getPane('pane_Placeneed202223_5').style.zIndex = 405;
+        map.getPane('pane_Placeneed202223_5').style['mix-blend-mode'] = 'normal';
+        var layer_Placeneed202223_5 = new L.geoJson(json_Placeneed202223_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Placeneed202223_5',
+            layerName: 'layer_Placeneed202223_5',
+            pane: 'pane_Placeneed202223_5',
+            onEachFeature: pop_Placeneed202223_5,
+            style: style_Placeneed202223_5_0,
+        });
+        bounds_group.addLayer(layer_Placeneed202223_5);
+        map.addLayer(layer_Placeneed202223_5);
+        function pop_Placeneed202122_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Planning area code</strong><br />' + (feature.properties['Secondary'] !== null ? autolinker.link(feature.properties['Secondary'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Place need</th>\
+                        <td>' + (feature.properties['need2122_Estimated_number_of_places _needed'] !== null ? autolinker.link(feature.properties['need2122_Estimated_number_of_places _needed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Placeneed202122_6_0(feature) {
+            if (feature.properties['need2122_Estimated_number_of_places _needed'] >= -2703.670000 && feature.properties['need2122_Estimated_number_of_places _needed'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Placeneed202122_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.30196078431372547)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2122_Estimated_number_of_places _needed'] >= 0.000000 && feature.properties['need2122_Estimated_number_of_places _needed'] <= 112.727273 ) {
+                return {
+                pane: 'pane_Placeneed202122_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.30196078431372547)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,203,237,0.07450980392156863)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2122_Estimated_number_of_places _needed'] >= 112.727273 && feature.properties['need2122_Estimated_number_of_places _needed'] <= 248.484848 ) {
+                return {
+                pane: 'pane_Placeneed202122_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.30196078431372547)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,150,218,0.14901960784313725)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2122_Estimated_number_of_places _needed'] >= 248.484848 && feature.properties['need2122_Estimated_number_of_places _needed'] <= 379.393939 ) {
+                return {
+                pane: 'pane_Placeneed202122_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.30196078431372547)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,97,200,0.2235294117647059)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['need2122_Estimated_number_of_places _needed'] >= 379.393939 && feature.properties['need2122_Estimated_number_of_places _needed'] <= 606.885108 ) {
+                return {
+                pane: 'pane_Placeneed202122_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.30196078431372547)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,45,181,0.30196078431372547)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Placeneed202122_6');
+        map.getPane('pane_Placeneed202122_6').style.zIndex = 406;
+        map.getPane('pane_Placeneed202122_6').style['mix-blend-mode'] = 'normal';
+        var layer_Placeneed202122_6 = new L.geoJson(json_Placeneed202122_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Placeneed202122_6',
+            layerName: 'layer_Placeneed202122_6',
+            pane: 'pane_Placeneed202122_6',
+            onEachFeature: pop_Placeneed202122_6,
+            style: style_Placeneed202122_6_0,
+        });
+        bounds_group.addLayer(layer_Placeneed202122_6);
+        map.addLayer(layer_Placeneed202122_6);
+        function pop_Provisionallyapprovedsecondaryfreeschools_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>School name</strong><br />' + (feature.properties['Current Project Name'] !== null ? autolinker.link(feature.properties['Current Project Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Provisionallyapprovedsecondaryfreeschools_7_0() {
+            return {
+                pane: 'pane_Provisionallyapprovedsecondaryfreeschools_7',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(128,17,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,30,42,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Provisionallyapprovedsecondaryfreeschools_7');
+        map.getPane('pane_Provisionallyapprovedsecondaryfreeschools_7').style.zIndex = 407;
+        map.getPane('pane_Provisionallyapprovedsecondaryfreeschools_7').style['mix-blend-mode'] = 'normal';
+        var layer_Provisionallyapprovedsecondaryfreeschools_7 = new L.geoJson(json_Provisionallyapprovedsecondaryfreeschools_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Provisionallyapprovedsecondaryfreeschools_7',
+            layerName: 'layer_Provisionallyapprovedsecondaryfreeschools_7',
+            pane: 'pane_Provisionallyapprovedsecondaryfreeschools_7',
+            onEachFeature: pop_Provisionallyapprovedsecondaryfreeschools_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Provisionallyapprovedsecondaryfreeschools_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Provisionallyapprovedsecondaryfreeschools_7);
+        map.addLayer(layer_Provisionallyapprovedsecondaryfreeschools_7);
+        function pop_Existingsecondaryschools_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>School name</strong><br />' + (feature.properties['Establishm'] !== null ? autolinker.link(feature.properties['Establishm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Existingsecondaryschools_8_0() {
+            return {
+                pane: 'pane_Existingsecondaryschools_8',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Existingsecondaryschools_8');
+        map.getPane('pane_Existingsecondaryschools_8').style.zIndex = 408;
+        map.getPane('pane_Existingsecondaryschools_8').style['mix-blend-mode'] = 'normal';
+        var layer_Existingsecondaryschools_8 = new L.geoJson(json_Existingsecondaryschools_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Existingsecondaryschools_8',
+            layerName: 'layer_Existingsecondaryschools_8',
+            pane: 'pane_Existingsecondaryschools_8',
+            onEachFeature: pop_Existingsecondaryschools_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Existingsecondaryschools_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Existingsecondaryschools_8);
+        map.addLayer(layer_Existingsecondaryschools_8);
+        function pop_Approvedsecondaryfreeschools_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>School name</strong><br />' + (feature.properties['Name.of.proposed.school'] !== null ? autolinker.link(feature.properties['Name.of.proposed.school'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Approvedsecondaryfreeschools_9_0() {
+            return {
+                pane: 'pane_Approvedsecondaryfreeschools_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Approvedsecondaryfreeschools_9');
+        map.getPane('pane_Approvedsecondaryfreeschools_9').style.zIndex = 409;
+        map.getPane('pane_Approvedsecondaryfreeschools_9').style['mix-blend-mode'] = 'normal';
+        var layer_Approvedsecondaryfreeschools_9 = new L.geoJson(json_Approvedsecondaryfreeschools_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Approvedsecondaryfreeschools_9',
+            layerName: 'layer_Approvedsecondaryfreeschools_9',
+            pane: 'pane_Approvedsecondaryfreeschools_9',
+            onEachFeature: pop_Approvedsecondaryfreeschools_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Approvedsecondaryfreeschools_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Approvedsecondaryfreeschools_9);
+        map.addLayer(layer_Approvedsecondaryfreeschools_9);
+        function pop_KLAwarrington_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>School name</strong><br />' + (feature.properties['schname'] !== null ? autolinker.link(feature.properties['schname'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_KLAwarrington_10_0() {
+            return {
+                pane: 'pane_KLAwarrington_10',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,255,221,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_KLAwarrington_10');
+        map.getPane('pane_KLAwarrington_10').style.zIndex = 410;
+        map.getPane('pane_KLAwarrington_10').style['mix-blend-mode'] = 'normal';
+        var layer_KLAwarrington_10 = new L.geoJson(json_KLAwarrington_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_KLAwarrington_10',
+            layerName: 'layer_KLAwarrington_10',
+            pane: 'pane_KLAwarrington_10',
+            onEachFeature: pop_KLAwarrington_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_KLAwarrington_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_KLAwarrington_10);
+        map.addLayer(layer_KLAwarrington_10);
+        function pop_40mileradiusofKLAWarrington_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_1'] !== null ? autolinker.link(feature.properties['field_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pcd'] !== null ? autolinker.link(feature.properties['pcd'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['oseast1m'] !== null ? autolinker.link(feature.properties['oseast1m'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osnrth1m'] !== null ? autolinker.link(feature.properties['osnrth1m'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lsoa11'] !== null ? autolinker.link(feature.properties['lsoa11'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['schname'] !== null ? autolinker.link(feature.properties['schname'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_40mileradiusofKLAWarrington_11_0() {
+            return {
+                pane: 'pane_40mileradiusofKLAWarrington_11',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_40mileradiusofKLAWarrington_11');
+        map.getPane('pane_40mileradiusofKLAWarrington_11').style.zIndex = 411;
+        map.getPane('pane_40mileradiusofKLAWarrington_11').style['mix-blend-mode'] = 'normal';
+        var layer_40mileradiusofKLAWarrington_11 = new L.geoJson(json_40mileradiusofKLAWarrington_11, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_40mileradiusofKLAWarrington_11',
+            layerName: 'layer_40mileradiusofKLAWarrington_11',
+            pane: 'pane_40mileradiusofKLAWarrington_11',
+            onEachFeature: pop_40mileradiusofKLAWarrington_11,
+            style: style_40mileradiusofKLAWarrington_11_0,
+        });
+        bounds_group.addLayer(layer_40mileradiusofKLAWarrington_11);
+        map.addLayer(layer_40mileradiusofKLAWarrington_11);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>FSapps2</h2>';
+            };
+            title.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/40mileradiusofKLAWarrington_11.png" /> 40 mile radius of KLA Warrington': layer_40mileradiusofKLAWarrington_11,'<img src="legend/KLAwarrington_10.png" /> KLA warrington': layer_KLAwarrington_10,'<img src="legend/Approvedsecondaryfreeschools_9.png" /> Approved secondary free schools': layer_Approvedsecondaryfreeschools_9,'<img src="legend/Existingsecondaryschools_8.png" /> Existing secondary schools': layer_Existingsecondaryschools_8,'<img src="legend/Provisionallyapprovedsecondaryfreeschools_7.png" /> Provisionally approved secondary free schools': layer_Provisionallyapprovedsecondaryfreeschools_7,'Place need 2021/22<br /><table><tr><td style="text-align: center;"><img src="legend/Placeneed202122_6_270400.png" /></td><td>-2704 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202122_6_01131.png" /></td><td>0 - 113</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202122_6_1132482.png" /></td><td>113 - 248</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202122_6_2483793.png" /></td><td>248 - 379</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202122_6_3796064.png" /></td><td>379 - 606</td></tr></table>': layer_Placeneed202122_6,'Place need 2022/23<br /><table><tr><td style="text-align: center;"><img src="legend/Placeneed202223_5_270300.png" /></td><td>-2703 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202223_5_01711.png" /></td><td>0 - 171</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202223_5_1712582.png" /></td><td>171 - 258</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202223_5_2584523.png" /></td><td>258 - 452</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202223_5_4526064.png" /></td><td>452 - 606</td></tr></table>': layer_Placeneed202223_5,'Place need 2023/24<br /><table><tr><td style="text-align: center;"><img src="legend/Placeneed202324_4_253300.png" /></td><td>-2533 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202324_4_02191.png" /></td><td>0 - 219</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202324_4_2193842.png" /></td><td>219 - 384</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202324_4_3845983.png" /></td><td>384 - 598</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202324_4_5987414.png" /></td><td>598 - 741</td></tr></table>': layer_Placeneed202324_4,'Place need 2024/25<br /><table><tr><td style="text-align: center;"><img src="legend/Placeneed202425_3_263900.png" /></td><td>-2639 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202425_3_01711.png" /></td><td>0 - 171</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202425_3_1713122.png" /></td><td>171 - 312</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202425_3_3125203.png" /></td><td>312 - 520</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202425_3_5207634.png" /></td><td>520 - 763</td></tr></table>': layer_Placeneed202425_3,'Place need 2025/26<br /><table><tr><td style="text-align: center;"><img src="legend/Placeneed202526_2_267210.png" /></td><td>-2672 - 1</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202526_2_12531.png" /></td><td>1 - 253</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202526_2_2534332.png" /></td><td>253 - 433</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202526_2_4335253.png" /></td><td>433 - 525</td></tr><tr><td style="text-align: center;"><img src="legend/Placeneed202526_2_5257224.png" /></td><td>525 - 722</td></tr></table>': layer_Placeneed202526_2,'Applications by local authority<br /><table><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_110.png" /></td><td>1 - 1</td></tr><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_1181.png" /></td><td>1 - 1.8</td></tr><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_18242.png" /></td><td>1.8 - 2.4</td></tr><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_24343.png" /></td><td>2.4 - 3.4</td></tr><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_34434.png" /></td><td>3.4 - 4.3</td></tr><tr><td style="text-align: center;"><img src="legend/Applicationsbylocalauthority_1_4355.png" /></td><td>4.3 - 5</td></tr></table>': layer_Applicationsbylocalauthority_1,"clippedmap11": layer_clippedmap11_0,}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        resetLabels([layer_Applicationsbylocalauthority_1,layer_Placeneed202122_6,layer_Approvedsecondaryfreeschools_9,layer_KLAwarrington_10]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Applicationsbylocalauthority_1,layer_Placeneed202122_6,layer_Approvedsecondaryfreeschools_9,layer_KLAwarrington_10]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Applicationsbylocalauthority_1,layer_Placeneed202122_6,layer_Approvedsecondaryfreeschools_9,layer_KLAwarrington_10]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Applicationsbylocalauthority_1,layer_Placeneed202122_6,layer_Approvedsecondaryfreeschools_9,layer_KLAwarrington_10]);
+        });
+        </script>
+    </body>
+</html>
